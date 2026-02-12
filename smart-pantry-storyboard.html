@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Pantry – UX Storyboard Prototype</title>
+  <style>
+  /* Global */
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #f0f4ff, #fdfbff);
+    color: #1f2933;
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  header .subtitle {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-top: 4px;
+  }
+
+  /* Layout */
+  #app {
+    display: flex;
+    height: calc(100vh - 80px);
+  }
+
+  /* Sidebar */
+  #sidebar {
+    width: 260px;
+    background: #ffffffcc;
+    backdrop-filter: blur(6px);
+    border-right: 1px solid #e5e7eb;
+    padding: 20px 14px;
+    overflow-y: auto;
+  }
+  #sidebar h2 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #4f46e5;
+    font-weight: 700;
+  }
+  .step-group-title {
+    font-size: 11px;
+    margin: 14px 4px 6px;
+    text-transform: uppercase;
+    color: #6b7280;
+    letter-spacing: 0.05em;
+  }
+  .nav-btn {
+    width: 100%;
+    padding: 10px 12px;
+    margin: 4px 0;
+    border-radius: 10px;
+    border: none;
+    background: #f3f4f6;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s ease;
+  }
+  .nav-btn:hover {
+    background: #e0e7ff;
+  }
+  .nav-btn.active {
+    background: #c7d2fe;
+    font-weight: 600;
+    color: #3730a3;
+    box-shadow: 0 2px 6px rgba(99,102,241,0.25);
+  }
+  .nav-btn .tag {
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+  }
+
+  /* Content */
+  #content {
+    flex: 1;
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  /* Phone Frame */
+  .phone-frame {
+    width: 380px;
+    background: #111827;
+    border-radius: 40px;
+    padding: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: column;
+  }
+  .phone-inner {
+    background: white;
+    border-radius: 28px;
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Phone UI */
+  .phone-status-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #9ca3af;
+    margin-bottom: 8px;
+  }
+  .phone-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .phone-header small {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  .pill {
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* Screens */
+  .screen {
+    display: none;
+    flex: 1;
+    overflow-y: auto;
+    padding-top: 10px;
+    animation: fadeIn 0.25s ease;
+  }
+  .screen.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Cards */
+  .card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .card h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .card p {
+    margin: 0;
+    font-size: 12px;
+    color: #4b5563;
+  }
+
+  /* Buttons */
+  .primary-btn {
+    background: #6366f1;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: 0.2s ease;
+  }
+  .primary-btn:hover {
+    background: #4f46e5;
+  }
+  .secondary-btn {
+    background: #e5e7eb;
+    color: #111827;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .ghost-btn {
+    background: transparent;
+    border: 1px dashed #9ca3af;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    color: #6b7280;
+  }
+
+  /* Badges */
+  .badge {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+  }
+  .badge-blue {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+  .badge-green {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  /* Narrative Panel */
+  .narrative {
+    flex: 1;
+    background: #ffffffcc;
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .narrative h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #4f46e5;
+  }
+  .chip {
+    background: #eef2ff;
+    color: #4338ca;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .chip-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Smart Pantry – UX Storyboard</h1>
+    <div class="subtitle">Interactive Proof of Concept · CS4800.02 Final Project</div>
+  </div>
+</header>
+
+<div id="app">
+  <!-- LEFT: Storyboard navigation -->
+  <aside id="sidebar">
+    <h2>User Journey</h2>
+
+    <div class="step-group-title">Onboarding</div>
+    <button class="nav-btn active" data-screen="screen-onboarding">
+      <span class="label">1. Welcome & Value Prop</span>
+      <span class="tag">First launch</span>
+    </button>
+    <button class="nav-btn" data-screen="screen-quick-setup">
+      <span class="label">2. Quick Setup (Diet & Household)</span>
+      <span class="tag">Setup</span>
+    </button>
+    <button class="nav-btn" data-screen="screen-receipt-scan">
+      <span class="label">3. First Pantry Scan</span>
+      <span class="tag">Activation</span>
+    </button>
+
+    <div class="step-group-title">Daily Use</div>
+    <button class="nav-btn" data-screen="screen-home">
+      <span class="label">4. Home Dashboard</span>
+      <span class="tag">Hub</span>
+    </button>
+    <button class="nav-btn" data-screen="screen-inventory">
+      <span class="label">5. Inventory & Expiration</span>
+      <span class="tag">Waste ↓</span>
+    </button>
+    <button class="nav-btn" data-screen="screen-recipes">
+      <span class="label">6. AI Recipe Suggestions</span>
+      <span class="tag">“What’s for dinner?”</span>
+    </button>
+    <button class="nav-btn" data-screen="screen-shopping">
+      <span class="label">7. Smart Shopping List</span>
+      <span class="tag">Planning</span>
+    </button>
+    <button class="nav-btn" data-screen="screen-waste-insights">
+      <span class="label">8. Waste Reduction Insights</span>
+      <span class="tag">Impact</span>
+    </button>
+
+    <div class="step-group-title">A Day in the Life</div>
+    <button class="nav-btn" data-screen="screen-day-life">
+      <span class="label">9. Evening Flow: From Alert → Dinner</span>
+      <span class="tag">Scenario</span>
+    </button>
+  </aside>
+
+  <!-- RIGHT: Phone mock + narrative -->
+  <main id="content">
+    <!-- Phone frame -->
+    <section class="phone-frame">
+      <div class="phone-inner">
+        <div class="phone-status-bar">
+          <span>9:41</span>
+          <span>Wi‑Fi ●●●  78%</span>
+        </div>
+        <div class="phone-header">
+          <div>
+            <h3 id="screen-title">Welcome</h3>
+            <small id="screen-subtitle">Never waste food again.</small>
+          </div>
+          <span class="pill" id="screen-pill">Onboarding</span>
+        </div>
+
+        <!-- Screens -->
+        <div id="screen-onboarding" class="screen active">
+          <p class="tagline">
+            Smart Pantry helps you track what’s in your kitchen, use it on time, and plan stress‑free meals.
+          </p>
+          <div class="card">
+            <h4>“Never waste food again.”</h4>
+            <p>See what’s in your pantry, fridge, and freezer at a glance, with automatic expiration tracking.</p>
+          </div>
+          <div class="card">
+            <h4>Save money, save time, save the planet</h4>
+            <p>Personalized recipes and smart shopping lists help you use what you have before it goes to waste.</p>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-quick-setup')">Get Started</button>
+            <button class="ghost-btn" onclick="goToScreen('screen-home')">Skip for now</button>
+          </div>
+        </div>
+
+        <div id="screen-quick-setup" class="screen">
+          <p class="tagline">Tell us a bit about your household so we can personalize recipes and alerts.</p>
+          <div class="card">
+            <h4>Household size</h4>
+            <p>● 1  ● 2  ● 3–4  ● 5+</p>
+          </div>
+          <div class="card">
+            <h4>Dietary preferences</h4>
+            <p>Vegan · Vegetarian · Gluten‑free · Dairy‑free · Keto · “Everything”</p>
+          </div>
+          <div class="card">
+            <h4>Cooking style</h4>
+            <p>15‑minute meals · Meal prep · Slow cooker · “I’m learning”</p>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-receipt-scan')">Continue → First Scan</button>
+            <button class="secondary-btn" onclick="goToScreen('screen-onboarding')">Back</button>
+          </div>
+        </div>
+
+        <div id="screen-receipt-scan" class="screen">
+          <p class="tagline">Quickly populate your pantry by scanning your latest grocery receipt.</p>
+          <div class="card">
+            <h4>Scan your receipt</h4>
+            <p>Use your camera to capture the full receipt. We’ll detect items, quantities, and estimated expiration dates.</p>
+          </div>
+          <div class="card">
+            <h4>Or add items manually</h4>
+            <p>Search “milk”, “spinach”, “pasta” and add them with a tap.</p>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-home')">Finish Setup</button>
+            <button class="secondary-btn" onclick="goToScreen('screen-quick-setup')">Back</button>
+          </div>
+        </div>
+
+        <div id="screen-home" class="screen">
+          <p class="tagline">Your kitchen at a glance: what’s expiring, what to cook, and what to buy.</p>
+          <div class="card">
+            <h4>Expiring soon</h4>
+            <div class="list-row">
+              <span>Spinach (Fridge)</span>
+              <span class="badge">1 day left</span>
+            </div>
+            <div class="list-row">
+              <span>Chicken breast (Freezer)</span>
+              <span class="badge">3 days left</span>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Tonight’s suggestions</h4>
+            <p>Use‑it‑up recipes based on what’s expiring soon.</p>
+            <p>• Creamy Spinach Pasta · 25 min<br>• One‑Pan Garlic Chicken & Veggies · 30 min</p>
+          </div>
+          <div class="card">
+            <h4>Quick actions</h4>
+            <p>• View full inventory<br>• Plan this week’s meals<br>• Open shopping list</p>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-recipes')">View Recipes</button>
+            <button class="secondary-btn" onclick="goToScreen('screen-inventory')">View Inventory</button>
+          </div>
+        </div>
+
+        <div id="screen-inventory" class="screen">
+          <p class="tagline">Browse and manage everything in your pantry, fridge, and freezer.</p>
+          <div class="card">
+            <h4>Filters</h4>
+            <p>Location: Pantry · Fridge · Freezer · All</p>
+            <p>Sort by: Expiration · A–Z · Category</p>
+          </div>
+          <div class="card">
+            <h4>Items (Fridge)</h4>
+            <div class="list-row">
+              <span>Spinach · 1 bag</span>
+              <span class="badge">1 day</span>
+            </div>
+            <div class="list-row">
+              <span>Greek Yogurt · 2 cups</span>
+              <span class="badge-blue">4 days</span>
+            </div>
+            <div class="list-row">
+              <span>Eggs · 10</span>
+              <span class="badge-green">10 days</span>
+            </div>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-recipes')">Cook with these</button>
+            <button class="secondary-btn" onclick="goToScreen('screen-home')">Back to Home</button>
+          </div>
+        </div>
+
+        <div id="screen-recipes" class="screen">
+          <p class="tagline">AI‑powered recipes based on what you already have and what’s expiring.</p>
+          <div class="card">
+            <h4>Use‑it‑up mode</h4>
+            <p>Prioritizing: Spinach, Chicken, Greek Yogurt</p>
+          </div>
+          <div class="card">
+            <h4>Creamy Spinach Pasta</h4>
+            <p>25 min · 2 pans · Difficulty: Easy</p>
+            <p>Uses: Spinach, Garlic, Pasta, Cream</p>
+            <p><span class="badge-green">0 items to buy</span></p>
+          </div>
+          <div class="card">
+            <h4>One‑Pan Garlic Chicken & Veggies</h4>
+            <p>30 min · Sheet pan · Difficulty: Easy</p>
+            <p>Uses: Chicken, Carrots, Potatoes, Spinach</p>
+            <p><span class="badge-blue">2 items to buy</span></p>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-shopping')">Add ingredients to list</button>
+            <button class="secondary-btn" onclick="goToScreen('screen-home')">Back to Home</button>
+          </div>
+        </div>
+
+        <div id="screen-shopping" class="screen">
+          <p class="tagline">Smart shopping list that respects what you already have.</p>
+          <div class="card">
+            <h4>Shopping list for this week</h4>
+            <div class="list-row">
+              <span>Parmesan cheese</span>
+              <span class="badge-blue">For Spinach Pasta</span>
+            </div>
+            <div class="list-row">
+              <span>Carrots</span>
+              <span class="badge-blue">For Garlic Chicken</span>
+            </div>
+            <div class="list-row">
+              <span>Olive oil</span>
+              <span class="badge-blue">Low in pantry</span>
+            </div>
+          </div>
+          <div class="card">
+            <h4>List options</h4>
+            <p>• Share with family<br>• Check off items in‑store<br>• Send to grocery delivery app (future)</p>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-home')">Done</button>
+            <button class="secondary-btn" onclick="goToScreen('screen-recipes')">Back to Recipes</button>
+          </div>
+        </div>
+
+        <div id="screen-waste-insights" class="screen">
+          <p class="tagline">See how much food and money you’ve saved by using what you buy.</p>
+          <div class="card">
+            <h4>This week</h4>
+            <p>• 3 items saved from expiring<br>• Estimated $18 saved<br>• 2.3 lbs of food kept out of landfill</p>
+          </div>
+          <div class="card">
+            <h4>Streaks & badges</h4>
+            <p>• 4‑week “Zero‑Waste Dinner” streak<br>• “Spinach Savior” badge unlocked</p>
+          </div>
+          <div class="card">
+            <h4>Tips</h4>
+            <p>• Store leafy greens with a paper towel to extend freshness<br>• Freeze leftover cooked chicken for quick lunches</p>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-home')">Back to Home</button>
+          </div>
+        </div>
+
+        <div id="screen-day-life" class="screen">
+          <p class="tagline">A typical evening for a busy, sustainability‑minded user.</p>
+          <div class="card">
+            <h4>5:30 PM – Push notification</h4>
+            <p>“Your spinach and chicken are expiring soon. Want recipe ideas that use them tonight?”</p>
+          </div>
+          <div class="card">
+            <h4>5:32 PM – Opens app → Home</h4>
+            <p>Sees “Expiring soon” and “Tonight’s suggestions” cards. Taps into AI recipes.</p>
+          </div>
+          <div class="card">
+            <h4>5:35 PM – Chooses recipe</h4>
+            <p>Selects “One‑Pan Garlic Chicken & Veggies”, adds missing ingredients to shopping list.</p>
+          </div>
+          <div class="card">
+            <h4>6:15 PM – After dinner</h4>
+            <p>Marks recipe as cooked. Waste insights update: “You just saved $6 and 0.7 lbs of food.”</p>
+          </div>
+          <div>
+            <button class="primary-btn" onclick="goToScreen('screen-home')">Jump to Home Screen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Narrative / explanation -->
+    <section class="narrative" id="narrative">
+      <h2>Welcome & Value Prop</h2>
+      <div class="chip-row">
+        <div class="chip">Onboarding</div>
+        <div class="chip">First‑time user</div>
+        <div class="chip">Business Plan: “Never waste food again”</div>
+      </div>
+      <h3>Goal of this screen</h3>
+      <p>
+        This screen introduces Smart Pantry’s core promise from the business plan: reducing food waste,
+        saving money, and eliminating “what’s for dinner?” stress by using AI and inventory tracking.
+        The user should immediately understand why the app exists and feel motivated to continue.
+      </p>
+
+      <h3>Key UX decisions</h3>
+      <ul>
+        <li><strong>Single, bold value statement</strong> (“Never waste food again”) aligned with the business concept.</li>
+        <li><strong>Two supporting cards</strong> that echo the business plan: inventory visibility and sustainability‑driven savings.</li>
+        <li><strong>Primary CTA: “Get Started”</strong> moves into personalization; <strong>secondary CTA: “Skip for now”</strong> respects busy users.</li>
+      </ul>
+
+      <h3>User story</h3>
+      <p>
+        As a sustainability‑minded millennial with limited time, I want to quickly see how this app will help me
+        waste less food and plan meals, so I can decide if it’s worth setting up right now.
+      </p>
+    </section>
+  </main>
+</div>
+
+<script>
+  const screens = {
+    "screen-onboarding": {
+      title: "Welcome",
+      subtitle: "Never waste food again.",
+      pill: "Onboarding",
+      narrativeTitle: "Welcome & Value Prop",
+      chips: ["Onboarding", "First‑time user", "Business Plan: “Never waste food again”"],
+      narrative: `
+        <h3>Goal of this screen</h3>
+        <p>
+          Introduce Smart Pantry’s core promise from the business plan: reducing food waste, saving money,
+          and simplifying daily meal planning through AI and inventory tracking.
+        </p>
+        <h3>Key UX decisions</h3>
+        <ul>
+          <li>Single, bold value statement that mirrors the business concept.</li>
+          <li>Supporting cards that highlight inventory visibility and sustainability impact.</li>
+          <li>Clear primary CTA (“Get Started”) and respectful secondary option (“Skip for now”).</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a new user, I want to quickly understand why this app matters so I can decide to invest time in setup.
+        </p>
+      `
+    },
+    "screen-quick-setup": {
+      title: "Quick Setup",
+      subtitle: "Personalize your kitchen.",
+      pill: "Onboarding",
+      narrativeTitle: "Quick Setup: Diet & Household",
+      chips: ["Onboarding", "Personalization", "Dietary preferences"],
+      narrative: `
+        <h3>Goal of this screen</h3>
+        <p>
+          Capture minimal but high‑impact information (household size, dietary preferences, cooking style)
+          to power personalized recipes and waste‑reduction suggestions, as described in the business plan.
+        </p>
+        <h3>Key UX decisions</h3>
+        <ul>
+          <li>Simple, tap‑based choices instead of long forms to reduce friction.</li>
+          <li>Focus on attributes that directly affect recipe recommendations and alerts.</li>
+          <li>Single “Continue → First Scan” CTA to move users toward activation.</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a busy user, I want to set my preferences in under a minute so the app feels tailored to me.
+        </p>
+      `
+    },
+    "screen-receipt-scan": {
+      title: "First Pantry Scan",
+      subtitle: "Populate your inventory fast.",
+      pill: "Activation",
+      narrativeTitle: "First Pantry Scan: Activation Moment",
+      chips: ["Activation", "Receipt OCR", "Automation‑first"],
+      narrative: `
+        <h3>Goal of this screen</h3>
+        <p>
+          Deliver on the “automation first” promise from the business plan by letting users scan a receipt
+          to auto‑populate their pantry, instead of manually entering every item.
+        </p>
+        <h3>Key UX decisions</h3>
+        <ul>
+          <li>Primary path: camera‑based receipt scan (future OCR/vision).</li>
+          <li>Secondary path: manual add for edge cases or partial receipts.</li>
+          <li>Clear next step: “Finish Setup” to land on the Home dashboard.</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a new user, I want to see value quickly by getting my real pantry into the app with minimal effort.
+        </p>
+      `
+    },
+    "screen-home": {
+      title: "Home",
+      subtitle: "Your kitchen at a glance.",
+      pill: "Daily use",
+      narrativeTitle: "Home Dashboard: Central Hub",
+      chips: ["Daily use", "Expiring soon", "Tonight’s suggestions"],
+      narrative: `
+        <h3>Goal of this screen</h3>
+        <p>
+          Provide a single hub that surfaces expiring items, suggested recipes, and quick actions,
+          reflecting the “central hub for modern household food management” positioning in the business plan.
+        </p>
+        <h3>Key UX decisions</h3>
+        <ul>
+          <li>“Expiring soon” card to directly attack food waste.</li>
+          <li>“Tonight’s suggestions” to reduce decision fatigue around dinner.</li>
+          <li>Quick actions to jump into inventory, meal planning, or shopping list.</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a user opening the app after work, I want to instantly see what needs attention and what I can cook.
+        </p>
+      `
+    },
+    "screen-inventory": {
+      title: "Inventory",
+      subtitle: "Pantry · Fridge · Freezer",
+      pill: "Daily use",
+      narrativeTitle: "Inventory & Expiration Management",
+      chips: ["Inventory", "Expiration tracking", "Waste reduction"],
+      narrative: `
+        <h3>Goal of this screen</h3>
+        <p>
+          Make it easy to browse and manage all ingredients by location and expiration date,
+          supporting the business plan’s “intelligent inventory tracking” feature.
+        </p>
+        <h3>Key UX decisions</h3>
+        <ul>
+          <li>Location filters (pantry, fridge, freezer) to match mental model of the kitchen.</li>
+          <li>Sorting by expiration to prioritize what needs to be used first.</li>
+          <li>“Cook with these” CTA to bridge inventory directly into recipes.</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a user planning meals, I want to see what I have and what’s expiring so I can plan around it.
+        </p>
+      `
+    },
+    "screen-recipes": {
+      title: "Recipes",
+      subtitle: "AI‑powered suggestions.",
+      pill: "AI engine",
+      narrativeTitle: "AI Recipe Suggestions & Use‑It‑Up Mode",
+      chips: ["AI recipes", "Use‑it‑up mode", "Personalization"],
+      narrative: `
+        <h3>Goal of this screen</h3>
+        <p>
+          Show AI‑powered recipe recommendations that prioritize expiring ingredients and respect dietary preferences,
+          as described in the business plan’s “AI Recipe Engine”.
+        </p>
+        <h3>Key UX decisions</h3>
+        <ul>
+          <li>“Use‑it‑up mode” label to make the waste‑reduction intent explicit.</li>
+          <li>Recipe cards show time, difficulty, and which ingredients are already on hand.</li>
+          <li>CTA to add missing ingredients to the shopping list, connecting to the next step in the flow.</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a user staring at my fridge, I want the app to suggest meals that use what I have before it expires.
+        </p>
+      `
+    },
+    "screen-shopping": {
+      title: "Shopping List",
+      subtitle: "Only what you need.",
+      pill: "Planning",
+      narrativeTitle: "Smart Shopping List",
+      chips: ["Shopping list", "Budget", "Planning"],
+      narrative: `
+        <h3>Goal of this screen</h3>
+        <p>
+          Generate a smart shopping list that accounts for existing inventory and planned recipes,
+          aligning with the “Smart Shopping Lists” feature in the business plan.
+        </p>
+        <h3>Key UX decisions</h3>
+        <ul>
+          <li>Items annotated with why they’re needed (recipe vs low stock).</li>
+          <li>Options to share with family or use in‑store as a checklist.</li>
+          <li>Future‑facing hint: integration with grocery delivery services.</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a user planning a grocery run, I want a list that avoids duplicates and reflects what I’m actually cooking.
+        </p>
+      `
+    },
+    "screen-waste-insights": {
+      title: "Waste Insights",
+      subtitle: "Your impact this week.",
+      pill: "Sustainability",
+      narrativeTitle: "Waste Reduction Insights & Gamification",
+      chips: ["Sustainability", "Gamification", "Impact metrics"],
+      narrative: `
+        <h3>Goal of this screen</h3>
+        <p>
+          Visualize the money and food saved, reinforcing the sustainability mission and encouraging ongoing engagement,
+          as described in the “Waste Reduction Tools” section of the business plan.
+        </p>
+        <h3>Key UX decisions</h3>
+        <ul>
+          <li>Simple metrics: items saved, dollars saved, pounds of food saved.</li>
+          <li>Badges and streaks to gamify sustainable behavior.</li>
+          <li>Actionable tips to extend shelf life and reduce future waste.</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a sustainability‑focused user, I want to see the tangible impact of using Smart Pantry over time.
+        </p>
+      `
+    },
+    "screen-day-life": {
+      title: "Scenario",
+      subtitle: "Evening flow.",
+      pill: "Scenario",
+      narrativeTitle: "A Day in the Life: Evening Flow",
+      chips: ["Scenario", "Push notifications", "End‑to‑end journey"],
+      narrative: `
+        <h3>Goal of this storyboard step</h3>
+        <p>
+          Tie multiple screens together into a realistic “day in the life” scenario for a busy, sustainability‑minded user,
+          showing how notifications, home, recipes, shopping list, and insights work as a cohesive experience.
+        </p>
+        <h3>Flow</h3>
+        <ul>
+          <li>5:30 PM: User receives an expiring‑items notification.</li>
+          <li>5:32 PM: Opens Home, sees expiring items and suggested recipes.</li>
+          <li>5:35 PM: Chooses a recipe, adds missing items to the shopping list.</li>
+          <li>6:15 PM: After cooking, marks recipe as done and sees updated waste insights.</li>
+        </ul>
+        <h3>User story</h3>
+        <p>
+          As a busy professional, I want the app to nudge me at the right time and guide me from “something is expiring”
+          all the way to “dinner is done” without extra mental load.
+        </p>
+      `
+    }
+  };
+
+  function goToScreen(id) {
+    // Update phone screens
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const active = document.getElementById(id);
+    if (active) active.classList.add('active');
+
+    // Update nav buttons
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-screen') === id);
+    });
+
+    // Update header
+    const meta = screens[id];
+    if (meta) {
+      document.getElementById('screen-title').textContent = meta.title;
+      document.getElementById('screen-subtitle').textContent = meta.subtitle;
+      document.getElementById('screen-pill').textContent = meta.pill;
+
+      // Update narrative
+      const narrative = document.getElementById('narrative');
+      narrative.innerHTML = `
+        <h2>${meta.narrativeTitle}</h2>
+        <div class="chip-row">
+          ${meta.chips.map(c => `<div class="chip">${c}</div>`).join('')}
+        </div>
+        ${meta.narrative}
+      `;
+    }
+  }
+
+  // Sidebar click handling
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-screen');
+      goToScreen(target);
+    });
+  });
+</script>
+</body>
+</html>
